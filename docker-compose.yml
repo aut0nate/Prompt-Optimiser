@@ -1,0 +1,10 @@
+services:
+  prompt-optimiser:
+    build: .
+    ports:
+      - "3002:3000"
+    env_file:
+      - .env
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3000
