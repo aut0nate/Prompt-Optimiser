@@ -11,9 +11,8 @@ services:
     expose:
       - "3000"
     networks:
-      - caddy
+      - mgmt-net
 
 networks:
-  caddy:
+  mgmt-net:
     external: true
-    name: ${DOCKER_NETWORK:-caddy}
