@@ -6,9 +6,11 @@ import {
   Clipboard,
   Loader2,
   MessageSquareText,
+  Moon,
   PanelRight,
   RotateCcw,
   Sparkles,
+  Sun,
   WandSparkles,
 } from 'lucide-react';
 import './styles.css';
@@ -30,6 +32,17 @@ const defaultResult = {
 
 function App() {
   const requestCycle = useRef(0);
+  const [theme, setTheme] = useState(() => {
+    if (typeof window === 'undefined') {
+      return 'dark';
+    }
+
+    try {
+      return window.localStorage.getItem('theme') || 'dark';
+    } catch {
+      return 'dark';
+    }
+  });
   const [input, setInput] = useState(samplePrompt);
   const [purpose, setPurpose] = useState('General');
   const [tone, setTone] = useState('Natural');
@@ -55,6 +68,7 @@ function App() {
   const tokenLabel = result.tokenUsage?.returnedPromptTokens
     ? `${result.tokenUsage.returnedPromptTokens.toLocaleString('en-GB')} tokens`
     : null;
+  const isDarkTheme = theme === 'dark';
 
   useEffect(() => {
     let isMounted = true;
@@ -76,6 +90,16 @@ function App() {
       isMounted = false;
     };
   }, []);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+
+    try {
+      window.localStorage.setItem('theme', theme);
+    } catch {
+      // Theme persistence is optional; the app should still run without storage access.
+    }
+  }, [theme]);
 
   async function buildQuestions() {
     if (!input.trim()) {
@@ -215,6 +239,21 @@ function App() {
           </span>
           <span>Using {model}</span>
           {tokenLabel && <span>{tokenLabel}</span>}
+          <button
+            className="theme-toggle"
+            type="button"
+            onClick={() => setTheme(isDarkTheme ? 'light' : 'dark')}
+            aria-label={`Switch to ${isDarkTheme ? 'light' : 'dark'} mode`}
+            aria-pressed={isDarkTheme}
+            title={`Switch to ${isDarkTheme ? 'light' : 'dark'} mode`}
+          >
+            <span className={isDarkTheme ? 'theme-toggle-option active-option' : 'theme-toggle-option'} aria-hidden="true">
+              <Moon size={16} />
+            </span>
+            <span className={isDarkTheme ? 'theme-toggle-option' : 'theme-toggle-option active-option'} aria-hidden="true">
+              <Sun size={16} />
+            </span>
+          </button>
         </div>
       </header>
 

@@ -1,10 +1,17 @@
 <!doctype html>
-<html lang="en-GB">
+<html lang="en-GB" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/prompt-optimiser-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Prompt Optimiser</title>
+    <script>
+      try {
+        document.documentElement.dataset.theme = localStorage.getItem('theme') || 'dark';
+      } catch {
+        document.documentElement.dataset.theme = 'dark';
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
