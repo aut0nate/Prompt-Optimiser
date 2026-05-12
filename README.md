@@ -6,6 +6,8 @@ Prompt Optimiser is a single-page web app for enhancing prompts using the OpenAI
 
 It is built for quick local use: paste an unfinished prompt, choose the purpose, tone, and detail level, optionally answer follow-up questions, and receive a clearer prompt with concise notes about what changed.
 
+![Screenshot or Preview](./images/Prompt-Optimiser.png)
+
 ## Features
 
 - Improve rough prompts into clearer, more actionable instructions.
