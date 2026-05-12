@@ -1,0 +1,19 @@
+services:
+  prompt-optimiser:
+    image: ghcr.io/aut0nate/prompt-optimiser:${IMAGE_TAG:-latest}
+    container_name: prompt-optimiser
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3000
+    expose:
+      - "3000"
+    networks:
+      - caddy
+
+networks:
+  caddy:
+    external: true
+    name: ${DOCKER_NETWORK:-caddy}
